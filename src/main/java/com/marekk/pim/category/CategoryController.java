@@ -30,7 +30,7 @@ public class CategoryController {
     CategoryFacade categoryFacade;
 
     @PostMapping(consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
-    @ApiOperation(value = "register a new category", produces = API_CONTENT_TYPE)
+    @ApiOperation(value = "create a new category", produces = API_CONTENT_TYPE)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Success", response = IdResponse.class),

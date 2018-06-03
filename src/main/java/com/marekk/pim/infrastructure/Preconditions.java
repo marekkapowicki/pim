@@ -1,4 +1,4 @@
-package com.marekk.pim;
+package com.marekk.pim.infrastructure;
 
 import com.marekk.pim.infrastructure.exception.PIMException;
 

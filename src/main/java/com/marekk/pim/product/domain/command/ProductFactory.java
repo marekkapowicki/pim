@@ -1,6 +1,6 @@
 package com.marekk.pim.product.domain.command;
 
-import com.marekk.pim.Preconditions;
+import com.marekk.pim.infrastructure.Preconditions;
 import com.marekk.pim.infrastructure.exception.Exceptions;
 import com.marekk.pim.product.dto.ProductDTO;
 
