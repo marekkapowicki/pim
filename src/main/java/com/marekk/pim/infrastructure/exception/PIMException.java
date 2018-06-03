@@ -1,4 +1,4 @@
-package com.marekk.pim.domain.exception;
+package com.marekk.pim.infrastructure.exception;
 
 import lombok.NoArgsConstructor;
 

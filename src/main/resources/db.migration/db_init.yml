@@ -99,7 +99,7 @@ databaseChangeLog:
         - createView:
               catalogName: product_view
               replaceIfExists: true
-              selectQuery: select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.category_id = category.id
+              selectQuery: (select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.external_category_id = category.external_id) union (select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.category_id = category.id)
               viewName: product_view
 
 

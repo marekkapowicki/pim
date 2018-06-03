@@ -1,6 +1,5 @@
-package com.marekk.pim.domain;
+package com.marekk.pim.infrastructure;
 
-import com.marekk.pim.infrastructure.Uuids;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -15,7 +14,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
 
+import static com.marekk.pim.infrastructure.Uuids.uuid;
 import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PUBLIC;
 
 @MappedSuperclass
 @FieldDefaults(level = PRIVATE)
@@ -31,7 +32,7 @@ public class BaseEntity {
 
     @Getter
     @NaturalId
-    String uuid = Uuids.uuid();
+    String uuid = uuid();
 
     @CreatedDate
     @Getter

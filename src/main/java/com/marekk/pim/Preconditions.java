@@ -1,6 +1,6 @@
 package com.marekk.pim;
 
-import com.marekk.pim.domain.exception.PIMException;
+import com.marekk.pim.infrastructure.exception.PIMException;
 
 import java.util.function.Supplier;
 

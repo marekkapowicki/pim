@@ -1,4 +1,4 @@
-package com.marekk.pim.api;
+package com.marekk.pim.api.config;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
