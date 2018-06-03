@@ -33,8 +33,17 @@ public class ProductFacade {
                 .orElseThrow(notFound("product not found id: " + id));
         productRepository.save(entity.merge(dto));
 
-
     }
+
+    @Transactional
+    public void delete(String id) {
+        log.info("deleting product by id: {}", id);
+        Long entityId = productRepository.findByUuid(id)
+                .map(ProductEntity::getId)
+                .orElseThrow(notFound("product not found id: " + id));
+        productRepository.delete(entityId);
+    }
+
 
     @VisibleForTesting
     String findNameById(String id) {
