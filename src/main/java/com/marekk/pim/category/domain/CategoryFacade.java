@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.marekk.pim.Preconditions.checkArgument;
 import static com.marekk.pim.infrastructure.exception.Exceptions.illegalState;
@@ -17,12 +18,14 @@ import static com.marekk.pim.infrastructure.exception.Exceptions.illegalState;
 public class CategoryFacade {
     CategoryRepository categoryRepository;
 
-    public CategoryDTO save(CategoryDTO dto) {
+    @Transactional
+    public CategoryDTO create(CategoryDTO dto) {
         checkArgument(dto != null, illegalState());
-        log.info("saving category {}", dto);
+        log.info("create category {}", dto);
         return categoryRepository.save(new CategoryEntity(dto.getExternalId(), dto.getName())).toDTO();
     }
 
+    @Transactional(readOnly = true)
     public Page<CategoryDTO> getAll(Pageable pageable) {
         log.info("get page = {} of all categories");
         return categoryRepository.findAll(pageable)

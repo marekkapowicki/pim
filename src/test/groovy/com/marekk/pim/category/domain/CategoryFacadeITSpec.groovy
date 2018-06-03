@@ -21,7 +21,7 @@ class CategoryFacadeITSpec extends Specification {
     CategoryFacade categoryFacade
 
     void setup() {
-        CATEGORY_ID = categoryFacade.save(SAVED_CATEGORY)
+        CATEGORY_ID = categoryFacade.create(SAVED_CATEGORY)
     }
 
     def "should find all categories"() {

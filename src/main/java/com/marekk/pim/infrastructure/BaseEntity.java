@@ -2,6 +2,7 @@ package com.marekk.pim.infrastructure;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,20 +23,20 @@ import static lombok.AccessLevel.PUBLIC;
 @FieldDefaults(level = PRIVATE)
 @EqualsAndHashCode(of = "uuid")
 @EntityListeners(AuditingEntityListener.class)
+@Getter
 public class BaseEntity {
     @Id
+    @Setter
     @GeneratedValue
     Long id;
 
     @Version
     Long version;
 
-    @Getter
     @NaturalId
     String uuid = uuid();
 
     @CreatedDate
-    @Getter
     LocalDateTime creationTime;
 
 

@@ -49,6 +49,8 @@ databaseChangeLog:
             - column:
                 name: external_id
                 type: varchar(50)
+                constraints:
+                  nullable: true
             - column:
                 name: name
                 type: varchar(50)
@@ -77,14 +79,6 @@ databaseChangeLog:
                 type: varchar(50)
                 constraints:
                   nullable: false
-
-            - column:
-                name: category_id
-                type: varchar(50)
-                constraints:
-                  nullable: false
-                  foreignKeyName: fk_category
-                  references: category(uuid)
             - column:
                   name: version
                   type: int
@@ -94,12 +88,12 @@ databaseChangeLog:
                   name: creation_time
                   type: timestamp
                   constraints:
-                    nullable: false
+                    nullable: true
 
         - createView:
               catalogName: product_view
               replaceIfExists: true
-              selectQuery: (select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.external_category_id = category.external_id) union (select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.category_id = category.id)
+              selectQuery: (select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.external_category_id = category.external_id) union (select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.external_category_id = category.external_id)
               viewName: product_view
 
 
