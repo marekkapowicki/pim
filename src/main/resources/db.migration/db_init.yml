@@ -4,7 +4,7 @@ databaseChangeLog:
       author: marekk
       changes:
         - createTable:
-            tableName: customer
+            tableName: category
             columns:
               - column:
                   name: id
@@ -14,21 +14,15 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: first_name
+                  name: external_id
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: last_name
+                  name: name
                   type: varchar(50)
                   constraints:
                     nullable: false
-              - column:
-                  name: email
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-                    unique: true
               - column:
                   name: creation_time
                   type: datetime
@@ -43,7 +37,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - createTable:
-            tableName: loan
+            tableName: product
             columns:
             - column:
                 name: id
@@ -53,47 +47,44 @@ databaseChangeLog:
                   primaryKey: true
                   nullable: false
             - column:
-                name: amount
+                name: external_id
+                type: varchar(50)
+            - column:
+                name: name
+                type: varchar(50)
+                constraints:
+                  nullable: false
+            - column:
+                name: description
+                type: varchar(1024)
+            - column:
+                name: min_order_quantity
+                type: int
+            - column:
+                name: unit_of_measure
+                type: int
+            - column:
+                name: purchase_price
                 type: decimal(19,2)
-                constraints:
-                  nullable: false
             - column:
-                name: start_date
-                type: date
-                constraints:
-                  nullable: false
+                name: available_quantity
+                type: int
             - column:
-                name: due_date
-                type: date
-                constraints:
-                  nullable: false
-            - column:
-                name: interest_rate
-                type: decimal(19,2)
-                constraints:
-                  nullable: false
+                name: external_category_id
+                type: varchar(50)
             - column:
                 name: uuid
                 type: varchar(50)
                 constraints:
                   nullable: false
+
             - column:
-                name: customer_full_name
-                type: varchar(101)
-                constraints:
-                  nullable: false
-            - column:
-                name: customer_email
+                name: category_id
                 type: varchar(50)
                 constraints:
                   nullable: false
-            - column:
-                name: customer_identity_no
-                type: varchar(50)
-                constraints:
-                  nullable: false
-                  foreignKeyName: fk_customer
-                  references: customer(uuid)
+                  foreignKeyName: fk_category
+                  references: category(uuid)
             - column:
                   name: version
                   type: int
@@ -104,57 +95,11 @@ databaseChangeLog:
                   type: timestamp
                   constraints:
                     nullable: false
-        - createTable:
-            tableName: loan_extension
-            columns:
-              - column:
-                  name: id
-                  type: int
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: duration
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: interest_rate
-                  type: decimal(19,2)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: due_date
-                  type: date
-                  constraints:
-                    nullable: false
-              - column:
-                  name: uuid
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: version
-                  type: int
-                  constraints:
-                    nullable: false
-              - column:
-                  name: creation_time
-                  type: timestamp
-                  constraints:
-                    nullable: false
-              - column:
-                  name: loan_id
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_loan
-                    references: loan(uuid)
+
         - createView:
-              catalogName: loan_snapshot
+              catalogName: product_view
               replaceIfExists: true
-              selectQuery: select loan.uuid as loan_id, loan.amount, loan.interest_rate, loan.due_date, loan.creation_time as creation_date, customer_identity_no, customer_full_name, customer_email, loan_extension.interest_rate as ext_interest_rate, loan_extension.due_date as ext_due_date,loan_extension.creation_time as ext_creation_time from loan left join loan_extension on loan.uuid = loan_extension.loan_id
-              viewName: loan_snapshot
+              selectQuery: select product.uuid as product_id, product.external_id, product.name, product.description, product.min_order_quantity, product.unit_of_measure, product.purchase_price, product.available_quantity, category.name as category_name from product left join category on product.category_id = category.id
+              viewName: product_view
 
 
