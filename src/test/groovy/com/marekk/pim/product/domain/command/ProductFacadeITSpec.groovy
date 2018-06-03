@@ -21,9 +21,6 @@ class ProductFacadeITSpec extends Specification {
     @Subject
     ProductFacade productFacade
 
-    @Autowired
-    ProductRepository repository
-
     void setup() {
         PRODUCT_ID = productFacade.create(SAVED_PRODUCT).id
     }
@@ -32,7 +29,7 @@ class ProductFacadeITSpec extends Specification {
         given:
             ProductDTO productWithNewName = ProductDTO.builder().name('new name').build()
         when:
-            productFacade.update(PRODUCT_ID, productWithNewName);
+            productFacade.update(PRODUCT_ID, productWithNewName)
         then:
             productFacade.findNameById(PRODUCT_ID) == 'new name'
     }
@@ -41,7 +38,7 @@ class ProductFacadeITSpec extends Specification {
         given:
             ProductDTO productWithNewName = ProductDTO.builder().name('new name').build()
         when:
-            productFacade.update('not existing', productWithNewName);
+            productFacade.update('not existing', productWithNewName)
         then:
             RuntimeException ex = thrown()
             ex.class == notFound().get().class
@@ -50,7 +47,7 @@ class ProductFacadeITSpec extends Specification {
     def 'delete existing product'() {
 
         given:
-            productFacade.delete(PRODUCT_ID);
+            productFacade.delete(PRODUCT_ID)
         when:
             productFacade.findNameById(PRODUCT_ID)
         then:

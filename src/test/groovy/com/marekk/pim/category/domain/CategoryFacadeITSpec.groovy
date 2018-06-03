@@ -26,7 +26,7 @@ class CategoryFacadeITSpec extends Specification {
 
     def "should find all categories"() {
         when:
-            Page page = categoryFacade.getAll(new PageRequest(0, 5))
+            Page page = categoryFacade.retrieveAll(new PageRequest(0, 5))
         then:
             with(page) {
                 totalElements == 1

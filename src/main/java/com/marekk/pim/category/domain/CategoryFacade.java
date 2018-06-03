@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.marekk.pim.Preconditions.checkArgument;
+import static com.marekk.pim.infrastructure.exception.Exceptions.conflicted;
 import static com.marekk.pim.infrastructure.exception.Exceptions.illegalState;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -22,11 +23,13 @@ public class CategoryFacade {
     public CategoryDTO create(CategoryDTO dto) {
         checkArgument(dto != null, illegalState());
         log.info("create category {}", dto);
+        checkArgument(dto.getExternalId() == null || categoryRepository.countByExternalId(dto.getExternalId()) > 0
+                , conflicted("external id already exists"));
         return categoryRepository.save(new CategoryEntity(dto.getExternalId(), dto.getName())).toDTO();
     }
 
     @Transactional(readOnly = true)
-    public Page<CategoryDTO> getAll(Pageable pageable) {
+    public Page<CategoryDTO> retrieveAll(Pageable pageable) {
         log.info("get page = {} of all categories");
         return categoryRepository.findAll(pageable)
                 .map(CategoryEntity::toDTO);

@@ -1,4 +1,4 @@
-package com.marekk.pim.api.config;
+package com.marekk.pim.infrastructure.api;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import static com.google.common.base.Predicates.or;
 import static springfox.documentation.builders.RequestHandlerSelectors.basePackage;
 
 @Configuration
@@ -22,7 +23,9 @@ public class SwaggerConfiguration {
                 .ignoredParameterTypes(Pageable.class)
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(basePackage("com.marekk.microlending.api"))
+                .apis(or(
+                        basePackage("com.marekk.pim.category"),
+                        basePackage("com.marekk.pim.product")))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -30,6 +33,6 @@ public class SwaggerConfiguration {
     @Bean
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Microlending application").build();
+                .title("PIM application").build();
     }
 }
