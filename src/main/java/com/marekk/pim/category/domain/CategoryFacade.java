@@ -23,7 +23,7 @@ public class CategoryFacade {
     public CategoryDTO create(CategoryDTO dto) {
         checkArgument(dto != null, illegalState());
         log.info("create category {}", dto);
-        checkArgument(dto.getExternalId() == null || categoryRepository.countByExternalId(dto.getExternalId()) > 0
+        checkArgument( categoryRepository.countByExternalId(dto.getExternalId()) == 0
                 , conflicted("external id already exists"));
         return categoryRepository.save(new CategoryEntity(dto.getExternalId(), dto.getName())).toDTO();
     }
