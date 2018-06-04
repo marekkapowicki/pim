@@ -1,28 +1,23 @@
 package com.marekk.pim.product.dto;
 
-
-import com.marekk.pim.infrastructure.BaseDTO;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
-@ToString
 @Getter
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode
-public class ProductDTO implements BaseDTO {
-    String id;
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class DefaultProductProjection implements ProductProjection {
+    String productId;
     String externalId;
     String name;
     String description;
     Integer minOrderQuantity;
     Integer unitOfMeasure;
-    String externalCategoryId;
+    String categoryName;
     BigDecimal purchasePrice;
     Integer availableQuantity;
 }

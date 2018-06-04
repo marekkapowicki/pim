@@ -4,6 +4,9 @@ import com.marekk.pim.product.dto.ProductProjection
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.data.domain.Example
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import spock.lang.Specification
@@ -35,8 +38,18 @@ class ProductFinderRepositoryITSpec extends Specification {
             ProductProjectionEntity sample = new ProductProjectionEntity('name': 'iphone')
 
         when:
-            List<ProductProjection> result = repository.findAll(of(sample) as Example)
+            Page<ProductProjectionEntity> result = repository.findAll(of(sample), new PageRequest(0, 5))
         then:
-            result
+            result.content.size() == 1
+    }
+
+    def "find 0 products by example"() {
+        given:
+            ProductProjectionEntity sample = new ProductProjectionEntity('name': 'iphone_666')
+
+        when:
+            Page<ProductProjectionEntity> result = repository.findAll(of(sample), new PageRequest(0, 5))
+        then:
+            result.content.size() == 0
     }
 }
