@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -89,10 +90,12 @@ public class ProductController {
         return productFinderFacade.findById(id);
     }
 
-    @GetMapping(produces = API_CONTENT_TYPE)
-    @ApiOperation(value = "Lists all products by example", produces = API_CONTENT_TYPE)
+    @GetMapping(produces = {API_CONTENT_TYPE, "text/csv"})
+    @ApiOperation(value = "Lists all products by example", produces = "application/pdf")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "externalId", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "categoryName", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
                     value = "Results page you want to retrieve (0..N)"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",

@@ -42,4 +42,9 @@ class FakeProductProjection implements ProductProjection {
     Integer getAvailableQuantity() {
         return 500
     }
+
+    @Override
+    String getExternalId() {
+        return 'externalId'
+    }
 }

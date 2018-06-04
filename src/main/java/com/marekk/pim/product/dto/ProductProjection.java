@@ -11,5 +11,5 @@ public interface ProductProjection {
     String getCategoryName();
     BigDecimal getPurchasePrice();
     Integer getAvailableQuantity();
-
+    String getExternalId();
 }

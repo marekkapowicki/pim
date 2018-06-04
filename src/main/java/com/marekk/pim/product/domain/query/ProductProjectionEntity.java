@@ -21,11 +21,12 @@ import static lombok.AccessLevel.PRIVATE;
 class ProductProjectionEntity {
 
     static ProductProjectionEntity from(ProductProjection projection) {
-        return new ProductProjectionEntity(projection.getProductId(), projection.getName(), projection.getDescription(),
+        return new ProductProjectionEntity(projection.getProductId(), projection.getExternalId(), projection.getName(), projection.getDescription(),
                 projection.getMinOrderQuantity(), projection.getUnitOfMeasure(), projection.getCategoryName(), projection.getPurchasePrice(), projection.getAvailableQuantity());
     }
     @Id
     String productId;
+    String externalId;
     String name;
     String description;
     Integer minOrderQuantity;
