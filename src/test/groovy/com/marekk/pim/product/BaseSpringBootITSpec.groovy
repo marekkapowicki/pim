@@ -3,6 +3,7 @@ package com.marekk.pim.product
 import com.jayway.restassured.RestAssured
 import com.marekk.pim.category.domain.CategoryFacade
 import com.marekk.pim.product.domain.command.ProductFacade
+import com.marekk.pim.product.domain.query.ProductFinderFacade
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
@@ -16,10 +17,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 abstract class BaseSpringBootITSpec extends Specification {
 
     @Value('${local.server.port}')
-    int serverPort;
+    int serverPort
 
     void setup() {
-        RestAssured.port = serverPort;
+        RestAssured.port = serverPort
     }
 
     @TestConfiguration
@@ -34,6 +35,10 @@ abstract class BaseSpringBootITSpec extends Specification {
         @Bean
         ProductFacade productFacade() {
             return factory.Stub(ProductFacade)
+        }
+        @Bean
+        ProductFinderFacade productFinderFacade() {
+            return factory.Stub(ProductFinderFacade)
         }
 
     }

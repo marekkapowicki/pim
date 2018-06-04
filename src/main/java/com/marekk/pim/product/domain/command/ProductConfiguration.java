@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories("com.marekk.pim.product.domain")
+@EnableJpaRepositories("com.marekk.pim.product.domain.command")
 class ProductConfiguration {
 
     @Bean

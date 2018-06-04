@@ -2,6 +2,8 @@ package com.marekk.pim.product;
 
 import com.marekk.pim.infrastructure.api.IdResponse;
 import com.marekk.pim.product.domain.command.ProductFacade;
+import com.marekk.pim.product.domain.query.ProductFinderFacade;
+import com.marekk.pim.product.dto.ProductProjection;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -29,6 +31,7 @@ import static lombok.AccessLevel.PRIVATE;
 public class ProductController {
 
     ProductFacade productFacade;
+    ProductFinderFacade productFinderFacade;
 
     @PostMapping(consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
     @ApiOperation(value = "create a new product", produces = API_CONTENT_TYPE)
@@ -65,5 +68,12 @@ public class ProductController {
     public ResponseEntity delete(@PathVariable("productId") @NotNull String productId) {
         productFacade.delete(productId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/{id}", produces = API_CONTENT_TYPE)
+    @ApiOperation(value = "Lists product by id", produces = API_CONTENT_TYPE)
+    public ProductProjection retrieve(@PathVariable("id") String id) {
+        log.info("retrieve product by id={}", id);
+        return productFinderFacade.findById(id);
     }
 }

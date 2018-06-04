@@ -1,5 +1,6 @@
 package com.marekk.pim.product.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marekk.pim.infrastructure.BaseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
