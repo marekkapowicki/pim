@@ -22,7 +22,7 @@ class ProductFacadeITSpec extends Specification {
     ProductFacade productFacade
 
     void setup() {
-        PRODUCT_ID = productFacade.create(SAVED_PRODUCT).id
+        PRODUCT_ID = productFacade.create(SAVED_PRODUCT)
     }
 
     def 'update existing product'() {

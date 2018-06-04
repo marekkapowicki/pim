@@ -14,6 +14,7 @@ class ProductFactory {
                 .minOrderQuantity(dto.getMinOrderQuantity())
                 .unitOfMeasure(dto.getUnitOfMeasure())
                 .externalCategoryId(dto.getExternalCategoryId())
+                .purchasePrice(dto.getPurchasePrice())
                 .availableQuantity(dto.getAvailableQuantity())
                 .build();
 

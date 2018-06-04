@@ -39,7 +39,7 @@ public class ProductController {
     })
     public IdResponse create(@RequestBody @Valid @NotNull CreateProductRequest createRequest) {
         log.info("new request arrived {}", createRequest);
-        return productFacade.create(createRequest.toDto());
+        return IdResponse.of(productFacade.create(createRequest.toDto()));
     }
 
     @PutMapping(value = "/{productId}",  consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
@@ -56,14 +56,13 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/{productId}",  consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
-    @ApiOperation(value = "delete a product", produces = API_CONTENT_TYPE)
+    @DeleteMapping(value = "/{productId}")
+    @ApiOperation(value = "delete a product")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = IdResponse.class)
     })
-    public ResponseEntity delete(
-            @PathVariable("productId") @NotNull String productId) {
+    public ResponseEntity delete(@PathVariable("productId") @NotNull String productId) {
         productFacade.delete(productId);
         return ResponseEntity.ok().build();
     }

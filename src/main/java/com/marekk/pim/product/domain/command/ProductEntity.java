@@ -25,7 +25,8 @@ class ProductEntity extends BaseEntity {
     int minOrderQuantity;
     int unitOfMeasure;
     String externalCategoryId;
-    BigDecimal availableQuantity;
+    BigDecimal purchasePrice;
+    int availableQuantity;
 
     ProductEntity merge(ProductDTO dto) {
         externalId = dto.getExternalId();
@@ -34,6 +35,7 @@ class ProductEntity extends BaseEntity {
         minOrderQuantity = dto.getMinOrderQuantity();
         unitOfMeasure = dto.getUnitOfMeasure();
         externalCategoryId = dto.getExternalCategoryId();
+        purchasePrice = dto.getPurchasePrice();
         availableQuantity = dto.getAvailableQuantity();
         return this;
     }

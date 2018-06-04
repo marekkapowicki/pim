@@ -21,7 +21,8 @@ public class CreateProductRequest implements CreateResourceRequest {
     int minOrderQuantity;
     int unitOfMeasure;
     String externalCategoryId;
-    BigDecimal availableQuantity;
+    BigDecimal purchasePrice;
+    int availableQuantity;
 
     ProductDTO toDto() {
         return ProductDTO.builder()
@@ -31,6 +32,7 @@ public class CreateProductRequest implements CreateResourceRequest {
                 .minOrderQuantity(minOrderQuantity)
                 .unitOfMeasure(unitOfMeasure)
                 .externalCategoryId(externalCategoryId)
+                .purchasePrice(purchasePrice)
                 .availableQuantity(availableQuantity).build();
     }
 }

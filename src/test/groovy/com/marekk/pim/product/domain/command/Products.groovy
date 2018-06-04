@@ -10,6 +10,7 @@ class Products {
             .minOrderQuantity(100)
             .unitOfMeasure(1)
             .externalCategoryId('zamroCategory123')
+            .purchasePrice(10.5G as BigDecimal)
             .availableQuantity(50).build()
 
 }

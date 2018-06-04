@@ -20,6 +20,7 @@ class ProductFactorySpec extends Specification {
                 minOrderQuantity == SAMPLE_DTO.minOrderQuantity
                 unitOfMeasure == SAMPLE_DTO.unitOfMeasure
                 externalCategoryId == SAMPLE_DTO.externalCategoryId
+                purchasePrice == SAMPLE_DTO.purchasePrice
                 availableQuantity == SAMPLE_DTO.availableQuantity
             }
     }

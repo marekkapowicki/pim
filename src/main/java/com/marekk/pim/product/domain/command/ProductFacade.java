@@ -19,10 +19,10 @@ public class ProductFacade {
     ProductFactory productFactory;
 
     @Transactional
-    public IdResponse create(ProductDTO dto) {
+    public String create(ProductDTO dto) {
         log.info("create new product from {}", dto);
         ProductEntity entity = productFactory.create(dto);
-        return IdResponse.of(productRepository.save(entity).getUuid());
+        return productRepository.save(entity).getUuid();
     }
 
 
