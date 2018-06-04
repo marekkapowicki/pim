@@ -22,11 +22,11 @@ class ProductEntity extends BaseEntity {
     @Getter
     String name;
     String description;
-    int minOrderQuantity;
-    int unitOfMeasure;
+    Integer minOrderQuantity;
+    Integer unitOfMeasure;
     String externalCategoryId;
     BigDecimal purchasePrice;
-    int availableQuantity;
+    Integer availableQuantity;
 
     ProductEntity merge(ProductDTO dto) {
         externalId = dto.getExternalId();

@@ -10,7 +10,7 @@ class ProductFinderFacadeSpec extends Specification {
 
     private final String id = "id"
     private final ProductFinderRepository repository = Mock(ProductFinderRepository) {
-        findByProductId(id) >>  Optional.of(new FakeProductProjection())
+        findByProductId(id) >> Optional.of(new FakeProductProjection())
     }
 
     @Subject
@@ -21,6 +21,6 @@ class ProductFinderFacadeSpec extends Specification {
         when:
             facade.findById(id)
         then:
-            1* repository.findByProductId(id)
+            1 * repository.findByProductId(id)
     }
 }

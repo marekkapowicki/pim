@@ -3,9 +3,12 @@ package com.marekk.pim.product.domain.query
 import com.marekk.pim.product.dto.ProductProjection
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.data.domain.Example
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.jdbc.Sql
 import spock.lang.Specification
+
+import static org.springframework.data.domain.Example.of
 
 @DataJpaTest
 @ContextConfiguration(classes = ProductFinderConfiguration)
@@ -25,6 +28,15 @@ class ProductFinderRepositoryITSpec extends Specification {
                 name == 'iphone'
                 categoryName == 'phones'
             }
+    }
 
+    def "find by example"() {
+        given:
+            ProductProjectionEntity sample = new ProductProjectionEntity('name': 'iphone')
+
+        when:
+            List<ProductProjection> result = repository.findAll(of(sample) as Example)
+        then:
+            result
     }
 }

@@ -21,12 +21,12 @@ public class FakeProductProjection implements ProductProjection {
     }
 
     @Override
-    public int getMinOrderQuantity() {
+    public Integer getMinOrderQuantity() {
         return 10;
     }
 
     @Override
-    public int getUnitOfMeasure() {
+    public Integer getUnitOfMeasure() {
         return 5;
     }
 
@@ -41,7 +41,7 @@ public class FakeProductProjection implements ProductProjection {
     }
 
     @Override
-    public int getAvailableQuantity() {
+    public Integer getAvailableQuantity() {
         return 500;
     }
 }

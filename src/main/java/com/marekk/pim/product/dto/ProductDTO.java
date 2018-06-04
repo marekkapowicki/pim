@@ -20,10 +20,9 @@ public class ProductDTO implements BaseDTO {
     String externalId;
     String name;
     String description;
-    int minOrderQuantity;
-    int unitOfMeasure;
+    Integer minOrderQuantity;
+    Integer unitOfMeasure;
     String externalCategoryId;
     BigDecimal purchasePrice;
-    int availableQuantity;
-
+    Integer availableQuantity;
 }

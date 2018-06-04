@@ -6,10 +6,10 @@ public interface ProductProjection {
     String getProductId();
     String getName();
     String getDescription();
-    int getMinOrderQuantity();
-    int getUnitOfMeasure();
+    Integer getMinOrderQuantity();
+    Integer getUnitOfMeasure();
     String getCategoryName();
     BigDecimal getPurchasePrice();
-    int getAvailableQuantity();
+    Integer getAvailableQuantity();
 
 }

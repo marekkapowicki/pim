@@ -23,9 +23,9 @@ class ProductProjectionEntity {
     String productId;
     String name;
     String description;
-    int minOrderQuantity;
-    int unitOfMeasure;
+    Integer minOrderQuantity;
+    Integer unitOfMeasure;
     String categoryName;
     BigDecimal purchasePrice;
-    int availableQuantity;
+    Integer availableQuantity;
 }
