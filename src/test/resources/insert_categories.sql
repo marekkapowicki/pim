@@ -1,0 +1,1 @@
+insert into category(id, creation_time, uuid, version, external_id, name) values (1, '2018-06-01', '1', 1, 'zamro_cat1', 'phones')

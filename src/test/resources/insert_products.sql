@@ -1,0 +1,1 @@
+insert into product(id, creation_time, uuid, version, available_quantity, description, external_category_id, external_id, min_order_quantity, name, purchase_price, unit_of_measure) values(null, '2018-06-01', 'product1', 1, 10, 'sample product', 'zamro_cat1', 'zamro_prod1', 2 , 'iphone', 100, 30)
