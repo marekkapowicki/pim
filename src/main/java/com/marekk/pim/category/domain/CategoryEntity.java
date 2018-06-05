@@ -24,4 +24,10 @@ class CategoryEntity extends BaseEntity {
     CategoryDTO toDTO() {
         return CategoryDTO.of(getUuid(), externalId, name);
     }
+
+    public CategoryEntity merge(CategoryDTO dto) {
+        externalId = dto.getExternalId();
+        name = dto.getName();
+        return this;
+    }
 }

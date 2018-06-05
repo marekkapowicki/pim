@@ -34,4 +34,11 @@ class CategoryFacadeITSpec extends Specification {
                 content.get(0).name == SAVED_CATEGORY.name
             }
     }
+
+    def "should find category by null external id"() {
+        when:
+            Optional<String> id = categoryFacade.retrieveByExternalId(null)
+        then:
+            !id.isPresent()
+    }
 }

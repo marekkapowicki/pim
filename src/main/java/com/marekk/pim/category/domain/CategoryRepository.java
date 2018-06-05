@@ -6,6 +6,7 @@ import java.util.Optional;
 
 interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
     Optional<CategoryEntity> findByUuid(String id);
+    Optional<CategoryEntity> findByExternalId(String id);
     long countByExternalId(String externalId);
 
 }

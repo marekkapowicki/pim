@@ -1,23 +1,26 @@
-package com.marekk.pim.category.dto;
+package com.marekk.pim.category.adapter;
 
-import com.marekk.pim.infrastructure.BaseDTO;
+import com.marekk.pim.category.dto.CategoryDTO;
 import com.opencsv.bean.CsvBindByName;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor(staticName = "of")
 @ToString
 @Getter
 @NoArgsConstructor
-public class CategoryDTO implements BaseDTO {
-    String id;
+@Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class CategoryRow {
     @CsvBindByName(column = "CategoryID")
     String externalId;
     @CsvBindByName(column = "Name")
     String name;
+
+    CategoryDTO toDto() {
+        return CategoryDTO.of(null, externalId, name);
+    }
 }

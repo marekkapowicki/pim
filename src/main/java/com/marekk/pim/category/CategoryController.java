@@ -5,6 +5,7 @@ import com.marekk.pim.category.domain.CategoryFacade;
 import com.marekk.pim.category.dto.CategoryDTO;
 import com.marekk.pim.infrastructure.api.IdResponse;
 import com.marekk.pim.infrastructure.api.UploadResult;
+import com.marekk.pim.infrastructure.transform.SourceFile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -80,9 +81,13 @@ public class CategoryController {
 
     @ApiOperation(value = "upload csv file", consumes = FORM_DATA, produces = APPLICATION_JSON_VALUE)
     @PostMapping(value = "/actions/import", consumes = FORM_DATA, produces = APPLICATION_JSON_VALUE)
-    public UploadResult uploadCsv(@RequestParam("uploadfile") MultipartFile uploadfile) {
-        log.info("uploading file: {} ", uploadfile.getName());
-        return csvImporter.importFile(uploadfile);
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Success", response = IdResponse.class),
+            @ApiResponse(code = 415, message = "only csv is supported")
+    })
+    public UploadResult uploadCsv(@RequestParam("uploadFile") MultipartFile uploadFile) {
+        return csvImporter.importFile(SourceFile.csv(uploadFile));
     }
 
 }

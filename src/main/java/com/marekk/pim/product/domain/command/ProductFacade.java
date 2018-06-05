@@ -32,7 +32,6 @@ public class ProductFacade {
         ProductEntity entity = productRepository.findByUuid(id)
                 .orElseThrow(notFound("product not found id: " + id));
         productRepository.save(entity.merge(dto));
-
     }
 
     @Transactional
