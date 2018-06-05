@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class AdapterConfiguration {
+class CategoryAdapterConfiguration {
 
     @Bean
-    CsvImporter csvImporter(CategoryFacade facade) {
-        return new CsvImporter(facade);
+    CategoryCsvImporter categoryCsvImporter(CategoryFacade facade) {
+        return new CategoryCsvImporter(facade);
     }
 }

@@ -1,6 +1,6 @@
 package com.marekk.pim.category;
 
-import com.marekk.pim.category.adapter.CsvImporter;
+import com.marekk.pim.category.adapter.CategoryCsvImporter;
 import com.marekk.pim.category.domain.CategoryFacade;
 import com.marekk.pim.category.dto.CategoryDTO;
 import com.marekk.pim.infrastructure.api.IdResponse;
@@ -45,7 +45,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public class CategoryController {
 
     CategoryFacade categoryFacade;
-    CsvImporter csvImporter;
+    CategoryCsvImporter categoryCsvImporter;
 
     @PostMapping(consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
     @ApiOperation(value = "create a new category", produces = API_CONTENT_TYPE)
@@ -84,7 +84,7 @@ public class CategoryController {
             @ApiResponse(code = 415, message = "only csv is supported")
     })
     public UploadResult uploadCsv(@RequestParam("uploadFile") MultipartFile uploadFile) {
-        return csvImporter.importFile(SourceFile.csv(uploadFile));
+        return categoryCsvImporter.importFile(SourceFile.csv(uploadFile));
     }
 
 }

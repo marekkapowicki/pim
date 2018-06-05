@@ -16,7 +16,7 @@ import java.util.Iterator;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
-public class CsvImporter {
+public class CategoryCsvImporter {
     CategoryFacade categoryFacade;
     public UploadResult importFile(SourceFile file) {
         Iterator<CategoryRow> iterator = file.iterator(CategoryRow.class);
@@ -31,7 +31,6 @@ public class CsvImporter {
 
     private void importRow(final CategoryDTO dto,
                            UploadResultBuilder uploadResultBuilder) {
-        log.info("insert category row {}", dto);
         categoryFacade.retrieveByExternalId(dto.getExternalId())
                 .map(id -> updateDto(id, dto, uploadResultBuilder))
                 .orElseGet(() -> insertDto(dto, uploadResultBuilder));

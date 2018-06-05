@@ -8,6 +8,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.marekk.pim.infrastructure.exception.Exceptions.notFound;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -26,11 +28,11 @@ public class ProductFacade {
 
 
     @Transactional
-    public void update(String id, ProductDTO dto) {
+    public String update(String id, ProductDTO dto) {
         log.info("updating the product with id = {}", id);
         ProductEntity entity = productRepository.findByUuid(id)
                 .orElseThrow(notFound("product not found id: " + id));
-        productRepository.save(entity.merge(dto));
+        return productRepository.save(entity.merge(dto)).getUuid();
     }
 
     @Transactional
@@ -49,5 +51,12 @@ public class ProductFacade {
         return productRepository.findByUuid(id)
                 .map(ProductEntity::getName)
                 .orElseThrow(notFound());
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<String> retrieveByExternalId(String id) {
+        log.info("find product by external id = {}", id);
+        return productRepository.findByExternalId(id)
+                .map(ProductEntity::getUuid);
     }
 }

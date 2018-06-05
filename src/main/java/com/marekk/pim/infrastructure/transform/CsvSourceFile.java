@@ -18,9 +18,14 @@ class CsvSourceFile implements SourceFile {
 
     @SneakyThrows
     @Override
+    /**
+     * there is a base parser that just skips the wrong lines
+     * my goal was to deliver feature not to handle bad files
+     */
     public <T> Iterator<T> iterator(Class<T> className) {
         Reader reader = new InputStreamReader(file.getInputStream());
         return new CsvToBeanBuilder(reader)
+//                .withThrowExceptions(false)
                 .withType(className)
                 .withIgnoreQuotations(true)
                 .withIgnoreLeadingWhiteSpace(true)

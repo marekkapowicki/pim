@@ -7,4 +7,6 @@ import java.util.Optional;
 interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Optional<ProductEntity> findByUuid(String id);
 
+    Optional<ProductEntity> findByExternalId(String id);
+
 }

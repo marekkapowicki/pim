@@ -1,6 +1,9 @@
 package com.marekk.pim.product;
 
 import com.marekk.pim.infrastructure.api.IdResponse;
+import com.marekk.pim.infrastructure.api.UploadResult;
+import com.marekk.pim.infrastructure.transform.SourceFile;
+import com.marekk.pim.product.adapter.ProductCsvImporter;
 import com.marekk.pim.product.domain.command.ProductFacade;
 import com.marekk.pim.product.domain.query.ProductFinderFacade;
 import com.marekk.pim.product.dto.ProductProjection;
@@ -24,15 +27,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import static com.marekk.pim.infrastructure.api.Specification.API_CONTENT_TYPE;
+import static com.marekk.pim.infrastructure.api.Specification.FORM_DATA;
 import static com.marekk.pim.infrastructure.api.Specification.ROOT;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @RestController
@@ -44,6 +51,7 @@ public class ProductController {
 
     ProductFacade productFacade;
     ProductFinderFacade productFinderFacade;
+    ProductCsvImporter productCsvImporter;
 
     @PostMapping(consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
     @ApiOperation(value = "create a new product", produces = API_CONTENT_TYPE)
@@ -105,9 +113,18 @@ public class ProductController {
                             + "Multiple sort criteria are supported.")
     })
     public Page<ProductProjection> retrieveByExample(ProductProjection example, Pageable pageable) {
-
         log.info("retrieve products by example: {}", example);
         return productFinderFacade.findByExample(example, pageable);
+    }
 
+    @ApiOperation(value = "upload csv file", consumes = FORM_DATA, produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/actions/import", consumes = FORM_DATA, produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Success", response = IdResponse.class),
+            @ApiResponse(code = 415, message = "only csv is supported")
+    })
+    public UploadResult uploadCsv(@RequestParam("uploadFile") MultipartFile uploadFile) {
+        return productCsvImporter.importFile(SourceFile.csv(uploadFile));
     }
 }

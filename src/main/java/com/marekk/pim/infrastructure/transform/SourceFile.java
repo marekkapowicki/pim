@@ -11,9 +11,11 @@ import static liquibase.util.file.FilenameUtils.getExtension;
 
 public interface SourceFile {
 
+    String CSV_FILE = "csv";
+
     static SourceFile csv(MultipartFile uploadFile) {
         checkArgument(uploadFile != null, illegalState());
-        checkArgument("csv".equals(getExtension(uploadFile.getOriginalFilename())), unsupportedFile());
+        checkArgument(CSV_FILE.equals(getExtension(uploadFile.getName())) || CSV_FILE.equals(getExtension(uploadFile.getOriginalFilename())), unsupportedFile());
         return new CsvSourceFile(uploadFile);
     }
 

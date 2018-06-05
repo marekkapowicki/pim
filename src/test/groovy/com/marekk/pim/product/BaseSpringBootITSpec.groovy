@@ -1,7 +1,9 @@
 package com.marekk.pim.product
 
 import com.jayway.restassured.RestAssured
+import com.marekk.pim.category.adapter.CategoryCsvImporter
 import com.marekk.pim.category.domain.CategoryFacade
+import com.marekk.pim.product.adapter.ProductCsvImporter
 import com.marekk.pim.product.domain.command.ProductFacade
 import com.marekk.pim.product.domain.query.ProductFinderFacade
 import org.springframework.beans.factory.annotation.Value
@@ -39,6 +41,14 @@ abstract class BaseSpringBootITSpec extends Specification {
         @Bean
         ProductFinderFacade productFinderFacade() {
             return factory.Stub(ProductFinderFacade)
+        }
+        @Bean
+        CategoryCsvImporter categoryCsvImporter() {
+            return factory.Stub(CategoryCsvImporter)
+        }
+        @Bean
+        ProductCsvImporter productCsvImporter() {
+            return factory.Stub(ProductCsvImporter)
         }
 
     }
