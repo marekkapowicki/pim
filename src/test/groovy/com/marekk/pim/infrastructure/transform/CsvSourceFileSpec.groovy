@@ -1,6 +1,7 @@
 package com.marekk.pim.infrastructure.transform
 
 import com.marekk.pim.product.adapter.ProductRow
+import javaslang.control.Try
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.web.multipart.MultipartFile
 import spock.lang.Specification
@@ -10,14 +11,12 @@ class CsvSourceFileSpec extends Specification {
         given:
             File csvFile = new File('src/test/resources/files/ProductData.csv')
             MultipartFile file = new MockMultipartFile(csvFile.name, csvFile.text.bytes)
-            Iterator<ProductRow> iterator = SourceFile.csv(file).iterator(ProductRow)
-        when:
 
-            while (iterator.hasNext()) {
-                iterator.next()
-            }
+        when:
+            Iterator<ProductRow> iter = SourceFile.csv(file).iterator(ProductRow)
+
         then:
-            notThrown()
+            printf "iter" + iter.size()
 
     }
 }

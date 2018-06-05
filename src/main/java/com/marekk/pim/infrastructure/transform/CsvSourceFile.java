@@ -25,9 +25,9 @@ class CsvSourceFile implements SourceFile {
     public <T> Iterator<T> iterator(Class<T> className) {
         Reader reader = new InputStreamReader(file.getInputStream());
         return new CsvToBeanBuilder(reader)
-//                .withThrowExceptions(false)
+                .withThrowExceptions(false)
                 .withType(className)
-                .withIgnoreQuotations(true)
+                .withIgnoreQuotations(false)
                 .withIgnoreLeadingWhiteSpace(true)
                 .build().iterator();
 
