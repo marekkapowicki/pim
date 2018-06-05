@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -97,8 +98,8 @@ public class ProductController {
         return productFinderFacade.findById(id);
     }
 
-    @GetMapping(produces = {API_CONTENT_TYPE, "text/csv"})
-    @ApiOperation(value = "Lists all products by example", produces = "application/pdf")
+    @GetMapping(produces = {API_CONTENT_TYPE, "text/csv"}, consumes = {API_CONTENT_TYPE, "text/csv"})
+    @ApiOperation(value = "Lists all products by example", produces = API_CONTENT_TYPE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "externalId", dataType = "string", paramType = "query"),
@@ -115,6 +116,8 @@ public class ProductController {
     public Page<ProductProjection> retrieveByExample(ProductProjection example, Pageable pageable) {
         log.info("retrieve products by example: {}", example);
         return productFinderFacade.findByExample(example, pageable);
+
+
     }
 
     @ApiOperation(value = "upload csv file", consumes = FORM_DATA, produces = APPLICATION_JSON_VALUE)
@@ -124,6 +127,7 @@ public class ProductController {
             @ApiResponse(code = 201, message = "Success", response = IdResponse.class),
             @ApiResponse(code = 415, message = "only csv is supported")
     })
+    @ResponseBody
     public UploadResult uploadCsv(@RequestParam("uploadFile") MultipartFile uploadFile) {
         return productCsvImporter.importFile(SourceFile.csv(uploadFile));
     }
