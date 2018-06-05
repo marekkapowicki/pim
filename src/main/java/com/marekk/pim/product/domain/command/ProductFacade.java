@@ -1,7 +1,6 @@
 package com.marekk.pim.product.domain.command;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.marekk.pim.infrastructure.api.IdResponse;
 import com.marekk.pim.product.dto.ProductDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
