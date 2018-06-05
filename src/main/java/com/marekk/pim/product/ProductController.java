@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -106,6 +107,7 @@ public class ProductController {
                             + "Multiple sort criteria are supported.")
     })
     public Page<ProductProjection> retrieveByExample(ProductProjection example, Pageable pageable) {
+
         log.info("retrieve products by example: {}", example);
         return productFinderFacade.findByExample(example, pageable);
 

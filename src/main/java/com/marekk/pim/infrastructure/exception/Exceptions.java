@@ -11,7 +11,6 @@ public final class Exceptions {
     public static Supplier<PIMException> notFound() {
         return ResourceNotFound::new;
     }
-
     public static Supplier<PIMException> notFound(String message) {
         return () -> new ResourceNotFound(message);
     }
@@ -30,5 +29,9 @@ public final class Exceptions {
 
     public static Supplier<PIMException> conflicted(String message) {
         return () -> new ResourceConflicted(message);
+    }
+
+    public static Supplier<PIMException> unsupportedFile() {
+        return UnsupportedFileException::new;
     }
 }

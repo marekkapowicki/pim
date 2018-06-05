@@ -38,6 +38,7 @@
     <maven-sortpom-plugin.version>2.3.1</maven-sortpom-plugin.version>
     <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
     <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
+      <opencsv.version>4.2</opencsv.version>
   </properties>
 
   <parent>
@@ -144,6 +145,11 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>${hibernate-validator.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>${opencsv.version}</version>
     </dependency>
     <dependency>
       <groupId>io.codearte.jfairy</groupId>
