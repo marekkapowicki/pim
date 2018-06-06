@@ -4,6 +4,7 @@ import com.marekk.pim.infrastructure.api.UploadResult;
 import com.marekk.pim.infrastructure.api.UploadResultBuilder;
 import com.marekk.pim.infrastructure.transform.SourceFile;
 import com.marekk.pim.product.domain.command.ProductFacade;
+import com.marekk.pim.product.domain.query.ProductFinderFacade;
 import com.marekk.pim.product.dto.ProductDTO;
 import javaslang.control.Try;
 import lombok.AccessLevel;
@@ -18,6 +19,7 @@ import java.util.Iterator;
 @AllArgsConstructor
 public class ProductCsvImporter {
     ProductFacade productFacade;
+    ProductFinderFacade productFinderFacade;
 
     public UploadResult importFile(SourceFile file) {
         Iterator<ProductRow> iterator = file.iterator(ProductRow.class);
@@ -32,7 +34,7 @@ public class ProductCsvImporter {
 
     private void importRow(final ProductDTO dto,
                            UploadResultBuilder uploadResultBuilder) {
-        productFacade.retrieveByExternalId(dto.getExternalId())
+        productFinderFacade.retrieveByExternalId(dto.getExternalId())
                 .map(id -> updateDto(id, dto, uploadResultBuilder))
                 .orElseGet(() -> insertDto(dto, uploadResultBuilder));
     }

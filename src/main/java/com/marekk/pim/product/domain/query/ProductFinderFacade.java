@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
 @Slf4j
@@ -26,12 +28,18 @@ public class ProductFinderFacade {
         return repository.findByProductId(id)
                 .orElseThrow(Exceptions.notFound());
     }
+
     @Transactional(readOnly = true)
     public Page<ProductProjection> findByExample(ProductProjection example, Pageable pageable) {
         log.info("finding the page = {} of products by example = {} ", pageable, example);
         return repository.findAll(Example.of(ProductProjectionEntity.from(example)), pageable)
                 .map(it -> projectionFactory.createProjection(ProductProjection.class, it));
+    }
 
-
+    @Transactional(readOnly = true)
+    public Optional<String> retrieveByExternalId(String id) {
+        log.info("find product by external id = {}", id);
+        return repository.findByExternalId(id)
+                .map(ProductProjection::getProductId);
     }
 }

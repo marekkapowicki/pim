@@ -9,10 +9,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
+
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.Files.readAllBytes;
 
 /*
 @author Volodymyr Rudyi
@@ -42,18 +46,23 @@ public class SuperCSVMessageConverter extends AbstractHttpMessageConverter<Objec
     protected void writeInternal(Object object,
                                  HttpOutputMessage message) throws IOException {
 
-        message.getHeaders().add(HttpHeaders.CONTENT_TYPE, TEXT_CSV);
+        Path csvResource = create();
+//        message.getHeaders().add(HttpHeaders.CONTENT_TYPE, TEXT_CSV);
+        message.getHeaders().add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvResource.getFileName() + "\"");
 
-        try (final Writer writer = new OutputStreamWriter(message.getBody())){
-            final CSVWriter csvWriter = new CSVWriter(writer,
+        message.getBody().write(readAllBytes(csvResource));
+    }
+
+    private Path create() throws IOException {
+        Path tempPath = Files.createTempFile("invoiceconvertedfile_", ".csv");
+        try (BufferedWriter writer = newBufferedWriter(tempPath)) {
+            new CSVWriter(writer,
                     CSVWriter.DEFAULT_SEPARATOR,
                     CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                    CSVWriter.DEFAULT_LINE_END);
-            csvWriter.writeNext(headers);
-
+                    CSVWriter.DEFAULT_LINE_END).writeNext(headers);
         }
-
+        return tempPath;
     }
 
 }

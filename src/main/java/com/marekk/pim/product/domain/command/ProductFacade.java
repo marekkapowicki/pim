@@ -53,10 +53,4 @@ public class ProductFacade {
                 .orElseThrow(notFound());
     }
 
-    @Transactional(readOnly = true)
-    public Optional<String> retrieveByExternalId(String id) {
-        log.info("find product by external id = {}", id);
-        return productRepository.findByExternalId(id)
-                .map(ProductEntity::getUuid);
-    }
 }

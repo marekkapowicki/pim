@@ -9,4 +9,6 @@ import java.util.Optional;
 interface ProductFinderRepository extends CrudRepository<ProductProjectionEntity, Long>,
         QueryByExampleExecutor<ProductProjectionEntity> {
     Optional<ProductProjection> findByProductId(String id);
+
+    Optional<ProductProjection> findByExternalId(String id);
 }
