@@ -40,6 +40,7 @@ import static com.marekk.pim.infrastructure.api.Specification.API_CONTENT_TYPE;
 import static com.marekk.pim.infrastructure.api.Specification.FORM_DATA;
 import static com.marekk.pim.infrastructure.api.Specification.ROOT;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -98,8 +99,10 @@ public class ProductController {
         return productFinderFacade.findById(id);
     }
 
-    @GetMapping(produces = {API_CONTENT_TYPE, "text/csv"}, consumes = {API_CONTENT_TYPE, "text/csv"})
-    @ApiOperation(value = "Lists all products by example", produces = API_CONTENT_TYPE)
+//    @GetMapping(produces = {API_CONTENT_TYPE, APPLICATION_OCTET_STREAM_VALUE}, consumes = {API_CONTENT_TYPE, APPLICATION_OCTET_STREAM_VALUE})
+//    @ApiOperation(value = "Lists all products by example", produces = APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(produces = "text/csv", consumes = "text/csv")
+    @ApiOperation(value = "Lists all products by example", produces = "text/csv", consumes = "text/csv")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "externalId", dataType = "string", paramType = "query"),

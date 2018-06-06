@@ -1,9 +1,11 @@
 package com.marekk.pim.product.adapter;
 
 import com.marekk.pim.product.dto.ProductDTO;
+import com.marekk.pim.product.dto.ProductProjection;
 import com.opencsv.bean.CsvBindByName;
 import javaslang.control.Try;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +20,7 @@ import static org.apache.commons.lang3.math.NumberUtils.createBigDecimal;
 @ToString
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductRow {
@@ -39,6 +42,10 @@ public class ProductRow {
     @CsvBindByName(column = "Available")
     String available;
 
+    public static ProductRow from(ProductProjection dto) {
+        return new ProductRow(dto.getExternalId(), dto.getName(), dto.getDescription(), dto.getMinOrderQuantity().toString()
+                ,dto.getExternalId(), dto.getCategoryName(), dto.getPurchasePrice().toString(), dto.getAvailableQuantity().toString());
+    }
     ProductDTO toDto() {
         return new ProductDTO(null, zamroId, name, description, toInt(minOrderQuantity), toInt(unitOfMeasure), categoryID, toBigDecimal(purchasePrice), toInt(available));
     }
