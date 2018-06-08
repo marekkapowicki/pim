@@ -9,14 +9,14 @@ import spock.lang.Specification
 class CsvSourceFileSpec extends Specification {
     def "upload the product csv file"() {
         given:
-            File csvFile = new File('src/test/resources/files/ProductData.csv')
+            File csvFile = new File('src/test/resources/files/smallProductData.csv')
             MultipartFile file = new MockMultipartFile(csvFile.name, csvFile.text.bytes)
 
         when:
             Iterator<ProductRow> iter = SourceFile.csv(file).iterator(ProductRow)
 
         then:
-            printf "iter" + iter.size()
+           iter.size() == 1
 
     }
 }
