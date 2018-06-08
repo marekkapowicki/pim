@@ -41,7 +41,7 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
                 .body("id", equalTo(createdId))
     }
 
-    def 'should return 200 during updating existing product'() {
+    def 'should return 204 during updating existing product'() {
         given:
             String existingId = "existingId"
             productFacade.update(existingId, SAMPLE.toDto())
@@ -53,7 +53,7 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
             .when()
                 .put(ROOT + "/products/{productId}")
             .then()
-                .statusCode(HttpStatus.SC_OK)
+                .statusCode(HttpStatus.SC_NO_CONTENT)
     }
 
     def 'should return 404 during updating not existing product'() {
@@ -71,7 +71,7 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
                 .statusCode(HttpStatus.SC_NOT_FOUND)
     }
 
-    def 'should return 200 during deleting existing product'() {
+    def 'should return 204 during deleting existing product'() {
         given:
             String existingId = "existingId"
             productFacade.delete(existingId)
@@ -81,7 +81,7 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
             .when()
                 .delete(ROOT + "/products/{productId}")
             .then()
-                .statusCode(HttpStatus.SC_OK)
+                .statusCode(HttpStatus.SC_NO_CONTENT)
     }
 
     def 'should return product by id'() {

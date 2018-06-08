@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,27 +69,25 @@ public class ProductController {
 
     @PutMapping(value = "/{productId}", consumes = API_CONTENT_TYPE, produces = API_CONTENT_TYPE)
     @ApiOperation(value = "update a product", produces = API_CONTENT_TYPE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = IdResponse.class)
+            @ApiResponse(code = 204, message = "Success", response = IdResponse.class)
     })
-    public ResponseEntity update(
+    public void update(
             @PathVariable("productId") @NotNull String productId,
             @RequestBody @Valid @NotNull CreateProductRequest updateReuest) {
         log.info("new request arrived {}", updateReuest);
         productFacade.update(productId, updateReuest.toDto());
-        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{productId}")
     @ApiOperation(value = "delete a product")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = IdResponse.class)
+            @ApiResponse(code = 204, message = "Success", response = IdResponse.class)
     })
-    public ResponseEntity delete(@PathVariable("productId") @NotNull String productId) {
+    public void delete(@PathVariable("productId") @NotNull String productId) {
         productFacade.delete(productId);
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/{id}", produces = API_CONTENT_TYPE)

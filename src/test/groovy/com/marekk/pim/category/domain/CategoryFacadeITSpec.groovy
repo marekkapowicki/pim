@@ -9,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 import spock.lang.Subject
 
-import static com.marekk.pim.category.domain.Categories.SAMPLE_CATEGORY_WITHOUT_EXT_ID
 import static com.marekk.pim.category.domain.Categories.SAMPLE_CATEGORY_WITH_EXT_ID
 
 @DataJpaTest

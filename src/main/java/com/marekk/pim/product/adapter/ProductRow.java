@@ -42,12 +42,15 @@ public class ProductRow {
     @CsvBindByName(column = "Available")
     String available;
 
+    String productId;
+
     public static ProductRow from(ProductProjection dto) {
         return new ProductRow(dto.getExternalId(), dto.getName(), dto.getDescription(), dto.getMinOrderQuantity().toString()
-                ,dto.getExternalId(), dto.getCategoryName(), dto.getPurchasePrice().toString(), dto.getAvailableQuantity().toString());
+                ,dto.getExternalId(), dto.getCategoryName(), dto.getPurchasePrice().toString(), dto.getAvailableQuantity().toString()
+                , dto.getProductId());
     }
     ProductDTO toDto() {
-        return new ProductDTO(null, zamroId, name, description, toInt(minOrderQuantity), toInt(unitOfMeasure), categoryID, toBigDecimal(purchasePrice), toInt(available));
+        return new ProductDTO(productId, zamroId, name, description, toInt(minOrderQuantity), toInt(unitOfMeasure), categoryID, toBigDecimal(purchasePrice), toInt(available));
     }
 
     private Integer toInt(String value) {
