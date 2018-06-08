@@ -24,7 +24,7 @@ public interface ProductProjection {
 
     default String print() {
 
-        return MoreObjects.toStringHelper(this)
+        return MoreObjects.toStringHelper(ProductProjection.class)
                 .add("productId", getProductId())
                 .add("name", getName())
                 .add("description", getDescription())
