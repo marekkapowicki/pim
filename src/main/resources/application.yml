@@ -3,6 +3,7 @@ management.security.enabled: false
 liquibase.change-log: classpath:db.migration/db_init.yml
 badrequest.error.message: Sorry, Nothing here
 spring.h2.console.enabled: true
+springfox.documentation.swagger.v2.path : /
 spring:
   jackson:
     serialization:

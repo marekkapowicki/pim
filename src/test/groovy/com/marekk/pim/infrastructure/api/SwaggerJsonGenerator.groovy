@@ -32,7 +32,7 @@ class SwaggerJsonGenerator extends Specification {
     def "generate swagger json file"() {
         expect:
             String outputDir = System.getProperty("io.springfox.staticdocs.outputDir")
-            MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/v2/api-docs")
+            MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/")
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andReturn()
