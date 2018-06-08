@@ -34,7 +34,7 @@ public class ProductCsvImporter {
 
     private void importRow(final ProductDTO dto,
                            UploadResultBuilder uploadResultBuilder) {
-        productFinderFacade.retrieveByExternalId(dto.getExternalId())
+        productFinderFacade.findByExternalId(dto.getExternalId())
                 .map(id -> updateDto(id, dto, uploadResultBuilder))
                 .orElseGet(() -> insertDto(dto, uploadResultBuilder));
     }

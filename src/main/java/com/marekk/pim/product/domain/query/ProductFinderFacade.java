@@ -37,7 +37,7 @@ public class ProductFinderFacade {
     }
 
     @Transactional(readOnly = true)
-    public Optional<String> retrieveByExternalId(String id) {
+    public Optional<String> findByExternalId(String id) {
         log.info("find product by external id = {}", id);
         return repository.findByExternalId(id)
                 .map(ProductProjection::getProductId);

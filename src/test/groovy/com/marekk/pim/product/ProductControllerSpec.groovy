@@ -1,12 +1,17 @@
 package com.marekk.pim.product
 
+import com.marekk.pim.infrastructure.api.Specification
 import com.marekk.pim.infrastructure.exception.Exceptions
 import com.marekk.pim.product.domain.command.ProductFacade
 import com.marekk.pim.product.domain.query.ProductFinderFacade
+import com.marekk.pim.product.dto.ProductProjection
 import org.apache.http.HttpStatus
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 
 import static com.jayway.restassured.RestAssured.given
+import static com.marekk.pim.infrastructure.api.Specification.*
 import static com.marekk.pim.infrastructure.api.Specification.API_CONTENT_TYPE
 import static com.marekk.pim.infrastructure.api.Specification.ROOT
 import static com.marekk.pim.product.Requests.SAMPLE
@@ -27,13 +32,13 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
             productFacade.create(SAMPLE.toDto()) >> createdId
         expect:
             given()
-                    .contentType(API_CONTENT_TYPE)
-                    .body(toJson(SAMPLE))
-                    .when()
-                    .post(ROOT + "/products")
-                    .then()
-                    .statusCode(HttpStatus.SC_CREATED)
-                    .body("id", equalTo(createdId))
+                .contentType(API_CONTENT_TYPE)
+                .body(toJson(SAMPLE))
+            .when()
+                .post(ROOT + "/products")
+            .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .body("id", equalTo(createdId))
     }
 
     def 'should return 200 during updating existing product'() {
@@ -42,13 +47,13 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
             productFacade.update(existingId, SAMPLE.toDto())
         expect:
             given()
-                    .pathParam("productId", existingId)
-                    .contentType(API_CONTENT_TYPE)
-                    .body(toJson(SAMPLE))
-                    .when()
-                    .put(ROOT + "/products/{productId}")
-                    .then()
-                    .statusCode(HttpStatus.SC_OK)
+                .pathParam("productId", existingId)
+                .contentType(API_CONTENT_TYPE)
+                .body(toJson(SAMPLE))
+            .when()
+                .put(ROOT + "/products/{productId}")
+            .then()
+                .statusCode(HttpStatus.SC_OK)
     }
 
     def 'should return 404 during updating not existing product'() {
@@ -57,13 +62,13 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
 
         expect:
             given()
-                    .pathParam("productId", 'wrongId')
-                    .contentType(API_CONTENT_TYPE)
-                    .body(toJson(SAMPLE))
-                    .when()
-                    .put(ROOT + "/products/{productId}")
-                    .then()
-                    .statusCode(HttpStatus.SC_NOT_FOUND)
+                .pathParam("productId", 'wrongId')
+                .contentType(API_CONTENT_TYPE)
+                .body(toJson(SAMPLE))
+            .when()
+                .put(ROOT + "/products/{productId}")
+            .then()
+                .statusCode(HttpStatus.SC_NOT_FOUND)
     }
 
     def 'should return 200 during deleting existing product'() {
@@ -72,11 +77,11 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
             productFacade.delete(existingId)
         expect:
             given()
-                    .pathParam("productId", existingId)
-                    .when()
-                    .delete(ROOT + "/products/{productId}")
-                    .then()
-                    .statusCode(HttpStatus.SC_OK)
+                .pathParam("productId", existingId)
+            .when()
+                .delete(ROOT + "/products/{productId}")
+            .then()
+                .statusCode(HttpStatus.SC_OK)
     }
 
     def 'should return product by id'() {
@@ -85,20 +90,35 @@ class ProductControllerSpec extends BaseSpringBootITSpec {
             productFinderFacade.findById(existingId) >> new FakeProductProjection()
         expect:
             given()
-                    .pathParam("productId", existingId)
-                    .when()
-                    .get(ROOT + "/products/{productId}")
-                    .then()
-                    .statusCode(HttpStatus.SC_OK)
-                    .contentType(API_CONTENT_TYPE)
-                    .body("productId", notNullValue()).and()
-                    .body("name", notNullValue()).and()
-                    .body("description", notNullValue())
-                    .body("minOrderQuantity", notNullValue())
-                    .body("unitOfMeasure", notNullValue())
-                    .body("categoryName", notNullValue())
-                    .body("purchasePrice", notNullValue())
-                    .body("availableQuantity", notNullValue())
+                .pathParam("productId", existingId)
+            .when()
+                .get(ROOT + "/products/{productId}")
+            .then()
+                .statusCode(HttpStatus.SC_OK)
+                .contentType(API_CONTENT_TYPE)
+                .body("productId", notNullValue()).and()
+                .body("name", notNullValue()).and()
+                .body("description", notNullValue())
+                .body("minOrderQuantity", notNullValue())
+                .body("unitOfMeasure", notNullValue())
+                .body("categoryName", notNullValue())
+                .body("purchasePrice", notNullValue())
+                .body("availableQuantity", notNullValue())
     }
+
+    def "should return 200 during producing the #fileType file "() {
+        given:
+            productFinderFacade.findByExample(_, _ as Pageable) >> new PageImpl<ProductProjection>([new FakeProductProjection()])
+        expect:
+            given()
+               .accept(fileType as String)
+            .when()
+                .get(ROOT + "/products/")
+            .then()
+                .statusCode(HttpStatus.SC_OK)
+        where:
+            fileType << [FILE_CSV , FILE_TXT]
+    }
+
 
 }

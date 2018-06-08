@@ -3,7 +3,7 @@
 Project Information Management spring boot microservice provides rest API
 the backend is shipped together with the [swagger documentation](http://localhost:8080/swagger-ui.html) thart
 can be used to check and test the API
-## Lombock
+## Lombok
 open in ide: the [lombok](open in ide: the lombok(https://projectlombok.org/) plugin is required
 ) plugin is required
 ## Getting Started

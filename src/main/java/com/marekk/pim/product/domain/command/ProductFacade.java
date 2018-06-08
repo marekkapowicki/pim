@@ -8,8 +8,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static com.marekk.pim.infrastructure.exception.Exceptions.notFound;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

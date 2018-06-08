@@ -1,5 +1,4 @@
 package com.marekk.pim.product.dto;
-
 import java.math.BigDecimal;
 
 public interface ProductProjection {
@@ -20,4 +19,5 @@ public interface ProductProjection {
     Integer getAvailableQuantity();
 
     String getExternalId();
+
 }
