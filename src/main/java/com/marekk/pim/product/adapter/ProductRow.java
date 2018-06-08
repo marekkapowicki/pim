@@ -46,8 +46,8 @@ public class ProductRow {
 
     public static ProductRow from(ProductProjection dto) {
         return new ProductRow(dto.getExternalId(), dto.getName(), dto.getDescription(), dto.getMinOrderQuantity().toString()
-                ,dto.getExternalId(), dto.getCategoryName(), dto.getPurchasePrice().toString(), dto.getAvailableQuantity().toString()
-                , dto.getProductId());
+                , dto.getUnitOfMeasure().toString(), dto.getCategoryName(), dto.getPurchasePrice().toString()
+                , dto.getAvailableQuantity().toString(), dto.getProductId());
     }
     ProductDTO toDto() {
         return new ProductDTO(productId, zamroId, name, description, toInt(minOrderQuantity), toInt(unitOfMeasure), categoryID, toBigDecimal(purchasePrice), toInt(available));
